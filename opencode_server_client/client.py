@@ -77,18 +77,13 @@ class OpencodeClient:
             transport=transport,
         )
         self._transport = SyncTransport(client, _defaults(opts))
-        self._server = ServerResource(self._transport)
+        self.server = ServerResource(self._transport)
         self.agent = AgentResource(self._transport)
         self.command = CommandResource(self._transport)
         self.skill = SkillResource(self._transport)
         self.path = PathResource(self._transport)
         self.lsp = LspResource(self._transport)
         self.mcp = McpResource(self._transport)
-
-    @property
-    def server(self) -> ServerResource:
-        """Server-level endpoints."""
-        return self._server
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -127,18 +122,13 @@ class OpencodeAsyncClient:
             transport=transport,
         )
         self._transport = AsyncTransport(client, _defaults(opts))
-        self._server = AsyncServerResource(self._transport)
+        self.server = AsyncServerResource(self._transport)
         self.agent = AsyncAgentResource(self._transport)
         self.command = AsyncCommandResource(self._transport)
         self.skill = AsyncSkillResource(self._transport)
         self.path = AsyncPathResource(self._transport)
         self.lsp = AsyncLspResource(self._transport)
         self.mcp = AsyncMcpResource(self._transport)
-
-    @property
-    def server(self) -> AsyncServerResource:
-        """Server-level endpoints."""
-        return self._server
 
     async def aclose(self) -> None:
         """Close the underlying HTTP client."""
