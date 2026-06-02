@@ -91,3 +91,20 @@ def test_server_update_config_sync():
     assert captured['request'].url.path == '/global/config'
     assert json.loads(captured['request'].content) == {'autoupdate': True}
     assert isinstance(resp.body, OpencodeConfig)
+
+
+async def test_server_update_config_async():
+    """update_config() sends PATCH via async client, returns OpencodeConfig."""
+    captured = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        """Capture request and return updated config payload."""
+        captured['request'] = request
+        return httpx.Response(200, json={'username': 'u', 'autoupdate': True})
+
+    async with make_async_client(handler) as oc:
+        resp = await oc.server.update_config({'autoupdate': True})
+    assert captured['request'].method == 'PATCH'
+    assert captured['request'].url.path == '/global/config'
+    assert json.loads(captured['request'].content) == {'autoupdate': True}
+    assert isinstance(resp.body, OpencodeConfig)

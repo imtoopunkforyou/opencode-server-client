@@ -145,20 +145,20 @@ def test_find_files_sends_all_query_params():
         return httpx.Response(200, json=[])
 
     criteria = OpencodeFindFilesQuery(
-        query='foo',
-        dirs='/src',
-        type_filter='py',
-        limit=5,
+        query='client',
+        include_dirs=True,
+        node_type='file',
+        limit=2,
     )
     with make_client(handler) as oc:
         oc.find.files(criteria)
     assert captured['method'] == 'GET'
     assert captured['path'] == '/find/file'
     params = captured['query']
-    assert params.get('query') == 'foo'  # type: ignore[union-attr]
-    assert params.get('dirs') == '/src'  # type: ignore[union-attr]
-    assert params.get('type') == 'py'  # type: ignore[union-attr]
-    assert params.get('limit') == '5'  # type: ignore[union-attr]
+    assert params.get('query') == 'client'  # type: ignore[union-attr]
+    assert params.get('dirs') == 'true'  # type: ignore[union-attr]
+    assert params.get('type') == 'file'  # type: ignore[union-attr]
+    assert params.get('limit') == '2'  # type: ignore[union-attr]
 
 
 def test_find_files_optional_params_omitted():

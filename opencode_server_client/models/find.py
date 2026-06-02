@@ -88,8 +88,8 @@ class OpencodeFindFilesQuery:
     """Input parameters for the find-files endpoint."""
 
     query: str
-    dirs: str | None = field(default=None)
-    type_filter: str | None = field(default=None)
+    include_dirs: bool | None = field(default=None)
+    node_type: str | None = field(default=None)
     limit: int | None = field(default=None)
 
 

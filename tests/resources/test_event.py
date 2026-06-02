@@ -101,3 +101,21 @@ def test_event_subscribe_skips_blank_data_lines():
         found = list(oc.event.subscribe())
     assert len(found) == 1
     assert found[0].event_type == 'hello'
+
+
+def test_event_subscribe_directory_in_query():
+    """subscribe(directory=...) forwards directory to the query string."""
+    captured: dict[str, object] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        """Capture query params and return an empty SSE stream."""
+        captured['query'] = dict(request.url.params)
+        return httpx.Response(
+            200,
+            text='',
+            headers={'content-type': 'text/event-stream'},
+        )
+
+    with make_client(handler) as oc:
+        list(oc.event.subscribe(directory='/my/project'))
+    assert captured['query'].get('directory') == '/my/project'  # type: ignore[union-attr]

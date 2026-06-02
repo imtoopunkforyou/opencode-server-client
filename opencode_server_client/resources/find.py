@@ -98,8 +98,8 @@ class FindResource(_SyncResource):
         """Find files matching *criteria*."""
         extra: dict[str, object] = {
             _QUERY_KEY: criteria.query,
-            'dirs': criteria.dirs,
-            'type': criteria.type_filter,
+            'dirs': criteria.include_dirs,
+            'type': criteria.node_type,
             'limit': criteria.limit,
         }
         query = build_query(
@@ -156,8 +156,8 @@ class AsyncFindResource(_AsyncResource):
         """Find files matching *criteria*."""
         extra: dict[str, object] = {
             _QUERY_KEY: criteria.query,
-            'dirs': criteria.dirs,
-            'type': criteria.type_filter,
+            'dirs': criteria.include_dirs,
+            'type': criteria.node_type,
             'limit': criteria.limit,
         }
         built = build_query(

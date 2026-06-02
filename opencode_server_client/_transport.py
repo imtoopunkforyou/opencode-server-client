@@ -7,6 +7,12 @@ from dataclasses import dataclass
 import httpx
 
 
+def _query_value(found: object) -> str:
+    if isinstance(found, bool):
+        return 'true' if found else 'false'
+    return str(found)
+
+
 @dataclass(frozen=True, slots=True)
 class RequestSpec:
     """An immutable plan for a single HTTP request."""
@@ -41,7 +47,7 @@ def build_query(
     overrides.update(extra or {})
     for key, found in overrides.items():
         if found is not None:
-            merged[key] = str(found)
+            merged[key] = _query_value(found)
     return merged
 
 
@@ -83,9 +89,15 @@ class SyncTransport:
         return _decode(response)
 
     @contextlib.contextmanager
-    def stream(self, method: str, path: str) -> Iterator[Iterator[str]]:
+    def stream(
+        self,
+        method: str,
+        path: str,
+        query: Mapping[str, str] | None = None,
+    ) -> Iterator[Iterator[str]]:
         """Open a streaming request, yielding decoded text lines."""
-        with self._client.stream(method, path) as response:
+        query_dict = dict(query or {})
+        with self._client.stream(method, path, params=query_dict) as response:
             yield response.iter_lines()
 
     def close(self) -> None:
@@ -125,9 +137,12 @@ class AsyncTransport:
         self,
         method: str,
         path: str,
+        query: Mapping[str, str] | None = None,
     ) -> AsyncIterator[AsyncIterator[str]]:
         """Open a streaming request, yielding decoded text lines."""
-        async with self._client.stream(method, path) as response:
+        async with self._client.stream(
+            method, path, params=dict(query or {})
+        ) as response:
             yield response.aiter_lines()
 
     async def aclose(self) -> None:

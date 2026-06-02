@@ -3,6 +3,7 @@
 import json
 from collections.abc import AsyncIterator, Iterator
 
+from opencode_server_client._transport import build_query
 from opencode_server_client.models.event import OpencodeEvent
 from opencode_server_client.resources._base import _AsyncResource, _SyncResource
 
@@ -28,9 +29,19 @@ def _parse_line(line: str) -> OpencodeEvent | None:
 class EventResource(_SyncResource):
     """Event stream (sync)."""
 
-    def subscribe(self) -> Iterator[OpencodeEvent]:
+    def subscribe(
+        self,
+        *,
+        directory: str | None = None,
+        workspace: str | None = None,
+    ) -> Iterator[OpencodeEvent]:
         """Yield server events until the stream closes."""
-        with self._transport.stream(_GET, _EVENT_PATH) as lines:
+        query = build_query(
+            self._transport.defaults,
+            directory=directory,
+            workspace=workspace,
+        )
+        with self._transport.stream(_GET, _EVENT_PATH, query) as lines:
             for line in lines:
                 event = _parse_line(line)
                 if event is not None:
@@ -40,9 +51,19 @@ class EventResource(_SyncResource):
 class AsyncEventResource(_AsyncResource):
     """Event stream (async)."""
 
-    async def subscribe(self) -> AsyncIterator[OpencodeEvent]:
+    async def subscribe(
+        self,
+        *,
+        directory: str | None = None,
+        workspace: str | None = None,
+    ) -> AsyncIterator[OpencodeEvent]:
         """Yield server events until the stream closes."""
-        async with self._transport.stream(_GET, _EVENT_PATH) as lines:
+        query = build_query(
+            self._transport.defaults,
+            directory=directory,
+            workspace=workspace,
+        )
+        async with self._transport.stream(_GET, _EVENT_PATH, query) as lines:
             async for line in lines:
                 event = _parse_line(line)
                 if event is not None:
