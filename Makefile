@@ -17,6 +17,8 @@ lint:
 	&& echo "✓ Flake8 checks" \
 	&& make mypy \
 	&& echo "✓ Mypy checks" \
+	&& poetry run deptry . \
+	&& echo "✓ Deptry checks" \
 	&& poetry run codespell --skip="*.lock,./htmlcov," \
 	&& echo "✓ Codespell checks" \
 	&& poetry run pymarkdown scan . \
