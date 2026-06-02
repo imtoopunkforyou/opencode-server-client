@@ -20,6 +20,9 @@ from opencode_server_client.resources._catalog_skill_lsp import (
 from opencode_server_client.resources.config import (
     AsyncConfigResource as AsyncConfigResource,
 )
+from opencode_server_client.resources.event import (
+    AsyncEventResource as AsyncEventResource,
+)
 from opencode_server_client.resources.file import (
     AsyncFileResource as AsyncFileResource,
 )

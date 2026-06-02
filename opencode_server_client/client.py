@@ -17,6 +17,7 @@ from opencode_server_client.resources import (
     AgentResource,
     CommandResource,
     ConfigResource,
+    EventResource,
     FileResource,
     FindResource,
     LspResource,
@@ -34,6 +35,7 @@ from opencode_server_client.resources._async import (
     AsyncAgentResource,
     AsyncCommandResource,
     AsyncConfigResource,
+    AsyncEventResource,
     AsyncFileResource,
     AsyncFindResource,
     AsyncLspResource,
@@ -90,6 +92,7 @@ class OpencodeClient:
         )
         self._transport = SyncTransport(client, _defaults(opts))
         self.server = ServerResource(self._transport)
+        self.event = EventResource(self._transport)
         self.agent = AgentResource(self._transport)
         self.command = CommandResource(self._transport)
         self.config = ConfigResource(self._transport)
@@ -143,6 +146,7 @@ class OpencodeAsyncClient:
         )
         self._transport = AsyncTransport(client, _defaults(opts))
         self.server = AsyncServerResource(self._transport)
+        self.event = AsyncEventResource(self._transport)
         self.agent = AsyncAgentResource(self._transport)
         self.command = AsyncCommandResource(self._transport)
         self.config = AsyncConfigResource(self._transport)

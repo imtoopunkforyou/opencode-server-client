@@ -1,5 +1,6 @@
 """Request specs and the sync/async httpx transports that execute them."""
-from collections.abc import Mapping
+import contextlib
+from collections.abc import AsyncIterator, Iterator, Mapping
 from dataclasses import dataclass
 
 import httpx
@@ -78,6 +79,12 @@ class SyncTransport:
         )
         return _decode(response)
 
+    @contextlib.contextmanager
+    def stream(self, method: str, path: str) -> Iterator[Iterator[str]]:
+        """Open a streaming request, yielding decoded text lines."""
+        with self._client.stream(method, path) as response:
+            yield response.iter_lines()
+
     def close(self) -> None:
         """Close the underlying client."""
         self._client.close()
@@ -109,6 +116,14 @@ class AsyncTransport:
             json=spec.json_body,
         )
         return _decode(response)
+
+    @contextlib.asynccontextmanager
+    async def stream(
+        self, method: str, path: str,
+    ) -> AsyncIterator[AsyncIterator[str]]:
+        """Open a streaming request, yielding decoded text lines."""
+        async with self._client.stream(method, path) as response:
+            yield response.aiter_lines()
 
     async def aclose(self) -> None:
         """Close the underlying client."""
