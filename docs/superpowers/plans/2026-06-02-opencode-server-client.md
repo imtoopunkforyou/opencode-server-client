@@ -82,11 +82,9 @@ them; when omitted the transport supplies the client-level defaults.
 - Create dirs: `opencode_server_client/models/`, `opencode_server_client/resources/`
 - Create: `opencode_server_client/models/__init__.py`, `opencode_server_client/resources/__init__.py`
 
-- [ ] **Step 1: Create a feature branch**
+- [ ] **Step 1: Work directly on `main`**
 
-```bash
-git checkout -b feat/http-client
-```
+Per the user's instruction (hot development), commit straight to `main`; no feature branch.
 
 - [ ] **Step 2: Verify httpx is installed**
 
@@ -1901,11 +1899,10 @@ oc.close()
 ```
 Expected: a health response, agent count, and the worktree directory printed without error.
 
-- [ ] **Step 6: Commit + push branch**
+- [ ] **Step 6: Commit (push only when the user asks)**
 
 ```bash
 git add -A && git commit -m "feat: public exports, README, final sweep"
-git push -u origin feat/http-client
 ```
 
 ---
