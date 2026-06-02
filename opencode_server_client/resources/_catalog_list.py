@@ -1,4 +1,5 @@
 """Catalog list endpoints: agent and command."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -25,9 +26,7 @@ def _build_agents(query: Mapping[str, str]) -> RequestSpec:
 
 
 def _ok_agents(code: int, payload: object) -> OpencodeAgentsResponse:
-    return OpencodeAgentsResponse(
-        code=code, body=agents_from_payload(payload)
-    )
+    return OpencodeAgentsResponse(code=code, body=agents_from_payload(payload))
 
 
 def _parse_agents(raw: RawResponse) -> _AgentsResult:
@@ -81,9 +80,7 @@ class AsyncAgentResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_agents(
-            await self._transport.send(_build_agents(query))
-        )
+        return _parse_agents(await self._transport.send(_build_agents(query)))
 
 
 class CommandResource(_SyncResource):
@@ -101,9 +98,7 @@ class CommandResource(_SyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_commands(
-            self._transport.send(_build_commands(query))
-        )
+        return _parse_commands(self._transport.send(_build_commands(query)))
 
 
 class AsyncCommandResource(_AsyncResource):

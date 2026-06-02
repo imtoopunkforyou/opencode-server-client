@@ -1,4 +1,5 @@
 """Input dataclasses for session write endpoints."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import compact
@@ -18,15 +19,17 @@ class OpencodeSessionCreate:
 
     def to_body(self) -> dict[str, object]:
         """Build a compacted JSON body, omitting None fields."""
-        return compact({
-            'title': self.title,
-            'parentID': self.parent_id,
-            'agent': self.agent,
-            'workspaceID': self.workspace_id,
-            'model': self.model,
-            'metadata': self.metadata,
-            'permission': self.permission,
-        })
+        return compact(
+            {
+                'title': self.title,
+                'parentID': self.parent_id,
+                'agent': self.agent,
+                'workspaceID': self.workspace_id,
+                'model': self.model,
+                'metadata': self.metadata,
+                'permission': self.permission,
+            }
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -40,11 +43,13 @@ class OpencodeSessionUpdate:
 
     def to_body(self) -> dict[str, object]:
         """Build the PATCH body; injects time.archived when set."""
-        built: dict[str, object] = compact({
-            'title': self.title,
-            'metadata': self.metadata,
-            'permission': self.permission,
-        })
+        built: dict[str, object] = compact(
+            {
+                'title': self.title,
+                'metadata': self.metadata,
+                'permission': self.permission,
+            }
+        )
         if self.archived is not None:
             built['time'] = {'archived': self.archived}
         return built
@@ -77,11 +82,13 @@ class OpencodeSessionSummarize:
 
     def to_body(self) -> dict[str, object]:
         """Compact JSON body for the summarize request."""
-        return compact({
-            'providerID': self.provider_id,
-            'modelID': self.model_id,
-            'auto': self.auto,
-        })
+        return compact(
+            {
+                'providerID': self.provider_id,
+                'modelID': self.model_id,
+                'auto': self.auto,
+            }
+        )
 
 
 @dataclass(frozen=True, slots=True)

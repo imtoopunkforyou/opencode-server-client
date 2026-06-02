@@ -1,4 +1,5 @@
 """Config endpoints (/config, /config/providers)."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -103,9 +104,7 @@ class ConfigResource(_SyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_providers(
-            self._transport.send(_build_providers(query))
-        )
+        return _parse_providers(self._transport.send(_build_providers(query)))
 
 
 class AsyncConfigResource(_AsyncResource):
@@ -123,9 +122,7 @@ class AsyncConfigResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_config(
-            await self._transport.send(_build_get(query))
-        )
+        return _parse_config(await self._transport.send(_build_get(query)))
 
     async def update(
         self,

@@ -1,4 +1,5 @@
 """Catalog response wrappers and payload-to-domain parse helpers."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import as_map, as_seq
@@ -58,9 +59,7 @@ def agents_from_payload(
     payload: object,
 ) -> tuple[OpencodeAgent, ...]:
     """Parse a list payload into a tuple of agents."""
-    return tuple(
-        OpencodeAgent.from_payload(entry) for entry in as_seq(payload)
-    )
+    return tuple(OpencodeAgent.from_payload(entry) for entry in as_seq(payload))
 
 
 def commands_from_payload(
@@ -76,9 +75,7 @@ def skills_from_payload(
     payload: object,
 ) -> tuple[OpencodeSkill, ...]:
     """Parse a list payload into a tuple of skills."""
-    return tuple(
-        OpencodeSkill.from_payload(entry) for entry in as_seq(payload)
-    )
+    return tuple(OpencodeSkill.from_payload(entry) for entry in as_seq(payload))
 
 
 def lsp_statuses_from_payload(

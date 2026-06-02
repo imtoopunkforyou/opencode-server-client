@@ -1,4 +1,5 @@
 """Provider endpoints (/provider, /provider/auth)."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -97,9 +98,7 @@ class AsyncProviderResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_list(
-            await self._transport.send(_build_list(query))
-        )
+        return _parse_list(await self._transport.send(_build_list(query)))
 
     async def auth(
         self,
@@ -113,6 +112,4 @@ class AsyncProviderResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_auth(
-            await self._transport.send(_build_auth(query))
-        )
+        return _parse_auth(await self._transport.send(_build_auth(query)))

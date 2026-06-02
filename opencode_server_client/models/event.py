@@ -1,4 +1,5 @@
 """Server-Sent Event model."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import as_map, get_str

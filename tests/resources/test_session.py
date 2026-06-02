@@ -1,4 +1,5 @@
 """Tests for the session namespace resource."""
+
 import json
 
 import httpx
@@ -117,6 +118,7 @@ def test_session_get_interpolates_id():
 
 def test_session_delete_returns_bool_true():
     """session.delete() returns OpencodeBoolResponse(body=True) on success."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return true payload."""
         return httpx.Response(200, json=True)
@@ -157,9 +159,7 @@ def test_session_update_with_archived():
         return httpx.Response(200, json=_session_payload())
 
     with make_client(handler) as oc:
-        oc.session.update(
-            _SESSION_ID, OpencodeSessionUpdate(archived=999.0)
-        )
+        oc.session.update(_SESSION_ID, OpencodeSessionUpdate(archived=999.0))
     assert seen['body'] == {'time': {'archived': 999.0}}
 
 
@@ -194,15 +194,18 @@ def test_session_diff_omits_message_id_when_none():
 
 def test_session_todo_returns_todos():
     """session.todo() returns OpencodeTodosResponse."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a list of todos."""
         return httpx.Response(
             200,
-            json=[{
-                'content': 'write tests',
-                'status': 'pending',
-                'priority': 'high',
-            }],
+            json=[
+                {
+                    'content': 'write tests',
+                    'status': 'pending',
+                    'priority': 'high',
+                }
+            ],
         )
 
     with make_client(handler) as oc:
@@ -214,6 +217,7 @@ def test_session_todo_returns_todos():
 
 def test_session_get_returns_error_on_404():
     """session.get() returns OpencodeErrorResponse on 404."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return 404 error."""
         return httpx.Response(
@@ -294,6 +298,7 @@ def test_session_summarize_sends_body():
 
 async def test_session_list_async():
     """session.list() works via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return an empty session list."""
         return httpx.Response(200, json=[])
@@ -306,6 +311,7 @@ async def test_session_list_async():
 
 async def test_session_get_async():
     """session.get() works via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a session payload."""
         return httpx.Response(200, json=_session_payload())
@@ -318,6 +324,7 @@ async def test_session_get_async():
 
 async def test_session_delete_async():
     """session.delete() returns bool via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return true."""
         return httpx.Response(200, json=True)

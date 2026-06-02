@@ -1,4 +1,5 @@
 """Tests for the config namespace resource."""
+
 import json
 
 import httpx
@@ -65,6 +66,7 @@ def test_config_update_sends_patch_body():
 
 def test_config_providers_parses_providers_and_default():
     """config.providers() parses providers list and default map."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a providers config payload."""
         return httpx.Response(200, json=_PROVIDERS_PAYLOAD)
@@ -97,6 +99,7 @@ def test_config_providers_sends_get_to_config_providers():
 
 def test_config_get_error_returns_error_response():
     """config.get() returns OpencodeErrorResponse on non-2xx status."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a 403 error."""
         return httpx.Response(
@@ -113,6 +116,7 @@ def test_config_get_error_returns_error_response():
 
 async def test_config_get_async():
     """config.get() works via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a config payload."""
         return httpx.Response(
@@ -144,6 +148,7 @@ async def test_config_update_async():
 
 async def test_config_providers_async():
     """config.providers() parses providers via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a providers payload."""
         return httpx.Response(200, json=_PROVIDERS_PAYLOAD)

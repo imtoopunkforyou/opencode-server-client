@@ -1,4 +1,5 @@
 """Request specs and the sync/async httpx transports that execute them."""
+
 import contextlib
 from collections.abc import AsyncIterator, Iterator, Mapping
 from dataclasses import dataclass
@@ -58,7 +59,9 @@ class SyncTransport:
     """Executes :class:`RequestSpec` objects through one ``httpx.Client``."""
 
     def __init__(
-        self, client: httpx.Client, defaults: Mapping[str, str],
+        self,
+        client: httpx.Client,
+        defaults: Mapping[str, str],
     ) -> None:
         """Wrap *client* and remember default query params."""
         self._client = client
@@ -119,7 +122,9 @@ class AsyncTransport:
 
     @contextlib.asynccontextmanager
     async def stream(
-        self, method: str, path: str,
+        self,
+        method: str,
+        path: str,
     ) -> AsyncIterator[AsyncIterator[str]]:
         """Open a streaming request, yielding decoded text lines."""
         async with self._client.stream(method, path) as response:

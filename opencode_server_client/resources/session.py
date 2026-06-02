@@ -1,4 +1,5 @@
 """Session endpoints (/session and /session/{id}/*)."""
+
 from collections.abc import Callable
 from typing import TypeVar
 
@@ -78,9 +79,7 @@ def _ok_sessions(code: int, payload: object) -> OpencodeSessionsResponse:
     )
 
 
-def _ok_status(
-    code: int, payload: object
-) -> OpencodeSessionStatusResponse:
+def _ok_status(code: int, payload: object) -> OpencodeSessionStatusResponse:
     if isinstance(payload, dict):
         body: dict[str, dict[str, object]] = {
             key: dict(found) if isinstance(found, dict) else {}
@@ -92,15 +91,11 @@ def _ok_status(
 
 
 def _ok_todos(code: int, payload: object) -> OpencodeTodosResponse:
-    return OpencodeTodosResponse(
-        code=code, body=todos_from_payload(payload)
-    )
+    return OpencodeTodosResponse(code=code, body=todos_from_payload(payload))
 
 
 def _ok_diff(code: int, payload: object) -> OpencodeDiffResponse:
-    return OpencodeDiffResponse(
-        code=code, body=diffs_from_payload(payload)
-    )
+    return OpencodeDiffResponse(code=code, body=diffs_from_payload(payload))
 
 
 class SessionResource(_SyncResource):

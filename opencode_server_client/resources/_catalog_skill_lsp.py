@@ -1,4 +1,5 @@
 """Catalog list endpoints: skill and lsp."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -25,9 +26,7 @@ def _build_skills(query: Mapping[str, str]) -> RequestSpec:
 
 
 def _ok_skills(code: int, payload: object) -> OpencodeSkillsResponse:
-    return OpencodeSkillsResponse(
-        code=code, body=skills_from_payload(payload)
-    )
+    return OpencodeSkillsResponse(code=code, body=skills_from_payload(payload))
 
 
 def _parse_skills(raw: RawResponse) -> _SkillsResult:
@@ -81,9 +80,7 @@ class AsyncSkillResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_skills(
-            await self._transport.send(_build_skills(query))
-        )
+        return _parse_skills(await self._transport.send(_build_skills(query)))
 
 
 class LspResource(_SyncResource):

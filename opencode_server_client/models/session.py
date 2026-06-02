@@ -1,4 +1,5 @@
 """Session domain models (nested types and the main session record)."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import (
@@ -187,11 +188,13 @@ class OpencodeSession:
             summary=_opt_summary(src),
             revert=(
                 dict(as_map(revert_found))
-                if isinstance(revert_found, dict) else None
+                if isinstance(revert_found, dict)
+                else None
             ),
             metadata=(
                 dict(as_map(meta_found))
-                if isinstance(meta_found, dict) else None
+                if isinstance(meta_found, dict)
+                else None
             ),
             permission=tuple(
                 dict(as_map(entry)) for entry in as_seq(src.get('permission'))

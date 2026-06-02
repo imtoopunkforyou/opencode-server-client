@@ -1,4 +1,5 @@
 """Typed accessors for decoded JSON payloads (keeps parsers mypy-clean)."""
+
 from collections.abc import Mapping
 
 

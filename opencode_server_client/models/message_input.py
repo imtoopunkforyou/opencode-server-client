@@ -1,4 +1,5 @@
 """Input dataclasses for message write endpoints."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import compact
@@ -21,16 +22,20 @@ class OpencodeMessagePrompt:
     def to_body(self) -> dict[str, object]:
         """Build a JSON body; parts always included, rest compacted."""
         built: dict[str, object] = {'parts': self.parts}
-        built.update(compact({
-            'messageID': self.message_id,
-            'model': self.model,
-            'agent': self.agent,
-            'noReply': self.no_reply,
-            'tools': self.tools,
-            'format': self.output_format,
-            'system': self.system,
-            'variant': self.variant,
-        }))
+        built.update(
+            compact(
+                {
+                    'messageID': self.message_id,
+                    'model': self.model,
+                    'agent': self.agent,
+                    'noReply': self.no_reply,
+                    'tools': self.tools,
+                    'format': self.output_format,
+                    'system': self.system,
+                    'variant': self.variant,
+                }
+            )
+        )
         return built
 
 
@@ -51,12 +56,16 @@ class OpencodeMessageCommand:
             'command': self.command,
             'arguments': self.arguments,
         }
-        built.update(compact({
-            'messageID': self.message_id,
-            'agent': self.agent,
-            'model': self.model,
-            'variant': self.variant,
-        }))
+        built.update(
+            compact(
+                {
+                    'messageID': self.message_id,
+                    'agent': self.agent,
+                    'model': self.model,
+                    'variant': self.variant,
+                }
+            )
+        )
         return built
 
 
@@ -75,8 +84,12 @@ class OpencodeMessageShell:
             'agent': self.agent,
             'command': self.command,
         }
-        built.update(compact({
-            'messageID': self.message_id,
-            'model': self.model,
-        }))
+        built.update(
+            compact(
+                {
+                    'messageID': self.message_id,
+                    'model': self.model,
+                }
+            )
+        )
         return built

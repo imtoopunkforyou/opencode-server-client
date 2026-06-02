@@ -1,4 +1,5 @@
 """Split a RawResponse into a typed success response or an error response."""
+
 from collections.abc import Callable
 from http import HTTPStatus
 from typing import TypeVar

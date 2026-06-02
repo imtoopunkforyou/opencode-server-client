@@ -1,4 +1,5 @@
 """Tests for catalog read endpoints: agent, command, skill, path, lsp, mcp."""
+
 import httpx
 
 from opencode_server_client.models.base import OpencodeErrorResponse
@@ -8,21 +9,25 @@ from tests.resources.conftest import make_async_client, make_client
 
 def _json_handler(payload, status=200):
     """Return an httpx handler that always responds with *payload*."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Handle request by returning the configured JSON payload."""
         return httpx.Response(status, json=payload)
+
     return handler
 
 
 def test_path_get_parses_all_fields():
     """path.get() returns an OpencodePath with all fields populated."""
-    handler = _json_handler({
-        'home': '/root',
-        'state': '/s',
-        'config': '/c',
-        'worktree': '/w',
-        'directory': '/d',
-    })
+    handler = _json_handler(
+        {
+            'home': '/root',
+            'state': '/s',
+            'config': '/c',
+            'worktree': '/w',
+            'directory': '/d',
+        }
+    )
     with make_client(handler) as oc:
         resp = oc.path.get()
     assert resp.code == 200
@@ -44,10 +49,16 @@ def test_path_get_request_path_and_method():
         captured['method'] = request.method
         captured['path'] = request.url.path
         captured['query'] = dict(request.url.params)
-        return httpx.Response(200, json={
-            'home': '/h', 'state': '/s', 'config': '/c',
-            'worktree': '/w', 'directory': '/d',
-        })
+        return httpx.Response(
+            200,
+            json={
+                'home': '/h',
+                'state': '/s',
+                'config': '/c',
+                'worktree': '/w',
+                'directory': '/d',
+            },
+        )
 
     with make_client(handler) as oc:
         oc.path.get()
@@ -58,14 +69,16 @@ def test_path_get_request_path_and_method():
 
 def test_agent_list_parses_each_entry():
     """agent.list() returns a tuple of OpencodeAgent entries."""
-    handler = _json_handler([
-        {
-            'name': 'build',
-            'mode': 'primary',
-            'native': True,
-            'options': {},
-        },
-    ])
+    handler = _json_handler(
+        [
+            {
+                'name': 'build',
+                'mode': 'primary',
+                'native': True,
+                'options': {},
+            },
+        ]
+    )
     with make_client(handler) as oc:
         resp = oc.agent.list()
     assert resp.code == 200
@@ -94,14 +107,16 @@ def test_agent_list_request_path_and_method():
 
 def test_command_list_parses_hints():
     """command.list() parses hints as a tuple of strings."""
-    handler = _json_handler([
-        {
-            'name': 'deploy',
-            'template': 'deploy {{target}}',
-            'subtask': False,
-            'hints': ['prod', 'staging'],
-        },
-    ])
+    handler = _json_handler(
+        [
+            {
+                'name': 'deploy',
+                'template': 'deploy {{target}}',
+                'subtask': False,
+                'hints': ['prod', 'staging'],
+            },
+        ]
+    )
     with make_client(handler) as oc:
         resp = oc.command.list()
     assert resp.body[0].name == 'deploy'
@@ -112,9 +127,11 @@ def test_command_list_parses_hints():
 
 def test_skill_list_maps_content_to_text():
     """skill.list() exposes server field 'content' as 'text'."""
-    handler = _json_handler([
-        {'name': 's', 'location': '/l', 'content': 'hi'},
-    ])
+    handler = _json_handler(
+        [
+            {'name': 's', 'location': '/l', 'content': 'hi'},
+        ]
+    )
     with make_client(handler) as oc:
         resp = oc.skill.list()
     assert resp.body[0].text == 'hi'
@@ -124,14 +141,16 @@ def test_skill_list_maps_content_to_text():
 
 def test_lsp_status_parses_id_as_lsp_id():
     """lsp.status() maps server field 'id' to 'lsp_id'."""
-    handler = _json_handler([
-        {
-            'id': 'lsp-1',
-            'name': 'pyright',
-            'root': '/repo',
-            'status': 'running',
-        },
-    ])
+    handler = _json_handler(
+        [
+            {
+                'id': 'lsp-1',
+                'name': 'pyright',
+                'root': '/repo',
+                'status': 'running',
+            },
+        ]
+    )
     with make_client(handler) as oc:
         resp = oc.lsp.status()
     assert resp.body[0].lsp_id == 'lsp-1'
@@ -150,6 +169,7 @@ def test_mcp_status_returns_raw_map():
 
 def test_error_response_propagated():
     """A 404 response from the server is decoded as OpencodeErrorResponse."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a 404 error payload."""
         return httpx.Response(
@@ -167,10 +187,15 @@ def test_error_response_propagated():
 
 async def test_path_get_async():
     """path.get() also works through the async client."""
-    handler = _json_handler({
-        'home': '/h', 'state': '/s', 'config': '/c',
-        'worktree': '/w', 'directory': '/d',
-    })
+    handler = _json_handler(
+        {
+            'home': '/h',
+            'state': '/s',
+            'config': '/c',
+            'worktree': '/w',
+            'directory': '/d',
+        }
+    )
     async with make_async_client(handler) as oc:
         resp = await oc.path.get()
     assert resp.code == 200
@@ -179,9 +204,11 @@ async def test_path_get_async():
 
 async def test_agent_list_async():
     """agent.list() also works through the async client."""
-    handler = _json_handler([
-        {'name': 'a', 'mode': 'secondary', 'native': False, 'options': {}},
-    ])
+    handler = _json_handler(
+        [
+            {'name': 'a', 'mode': 'secondary', 'native': False, 'options': {}},
+        ]
+    )
     async with make_async_client(handler) as oc:
         resp = await oc.agent.list()
     assert resp.body[0].name == 'a'

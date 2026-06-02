@@ -1,4 +1,5 @@
 """Tests for project namespace endpoints: list and current."""
+
 import httpx
 
 from opencode_server_client.models.base import OpencodeErrorResponse
@@ -18,9 +19,11 @@ _PROJECT_PAYLOAD = {
 
 def _json_handler(payload, status=200):
     """Return an httpx handler that always responds with *payload*."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Handle request by returning the configured JSON payload."""
         return httpx.Response(status, json=payload)
+
     return handler
 
 
@@ -118,6 +121,7 @@ def test_project_list_directory_override():
 
 def test_project_error_maps_to_error_response():
     """A 404 response is decoded as OpencodeErrorResponse."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a 404 error payload."""
         return httpx.Response(

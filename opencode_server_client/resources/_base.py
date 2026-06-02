@@ -1,4 +1,5 @@
 """Base classes that give resources access to a transport."""
+
 from opencode_server_client._transport import AsyncTransport, SyncTransport
 
 

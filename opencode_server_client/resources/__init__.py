@@ -1,4 +1,5 @@
 """Sync resource namespace classes."""
+
 from opencode_server_client.resources._catalog_list import (
     AgentResource as AgentResource,
 )

@@ -1,4 +1,5 @@
 """Message endpoints (/session/{id}/message and variants)."""
+
 from collections.abc import Callable
 from typing import TypeVar
 

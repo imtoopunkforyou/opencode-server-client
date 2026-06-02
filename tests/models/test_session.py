@@ -1,4 +1,5 @@
 """Tests for session domain models and response wrappers."""
+
 from opencode_server_client.models.base import OpencodeBoolResponse, ok_bool
 from opencode_server_client.models.session import (
     OpencodeSession,
@@ -132,8 +133,9 @@ def test_sessions_from_payload_returns_tuple():
 
 def test_todo_content_maps_to_text():
     """OpencodeTodo maps the server key 'content' to the field 'text'."""
-    todo = OpencodeTodo.from_payload({'content': 'fix bug', 'status': 'open',
-                                      'priority': 'high'})
+    todo = OpencodeTodo.from_payload(
+        {'content': 'fix bug', 'status': 'open', 'priority': 'high'}
+    )
     assert todo.text == 'fix bug'
     assert todo.status == 'open'
     assert todo.priority == 'high'
@@ -141,10 +143,12 @@ def test_todo_content_maps_to_text():
 
 def test_todos_from_payload_returns_tuple():
     """todos_from_payload parses a list into a tuple of OpencodeTodo."""
-    todos = todos_from_payload([
-        {'content': 'a', 'status': 'open', 'priority': 'low'},
-        {'content': 'b', 'status': 'done', 'priority': 'high'},
-    ])
+    todos = todos_from_payload(
+        [
+            {'content': 'a', 'status': 'open', 'priority': 'low'},
+            {'content': 'b', 'status': 'done', 'priority': 'high'},
+        ]
+    )
     assert isinstance(todos, tuple)
     assert len(todos) == 2
     assert todos[0].text == 'a'
@@ -160,13 +164,15 @@ def test_todos_response_is_base_response_subclass():
 
 def test_snapshot_diff_file_maps_to_filepath():
     """OpencodeSnapshotDiff maps server key 'file' to field 'filepath'."""
-    diff = OpencodeSnapshotDiff.from_payload({
-        'file': 'src/main.py',
-        'patch': '@@ ...',
-        'additions': 5,
-        'deletions': 1,
-        'status': 'modified',
-    })
+    diff = OpencodeSnapshotDiff.from_payload(
+        {
+            'file': 'src/main.py',
+            'patch': '@@ ...',
+            'additions': 5,
+            'deletions': 1,
+            'status': 'modified',
+        }
+    )
     assert diff.filepath == 'src/main.py'
     assert diff.patch == '@@ ...'
     assert diff.additions == 5.0

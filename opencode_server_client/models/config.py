@@ -1,4 +1,5 @@
 """Configuration models (the server's Config schema is large and open-ended)."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import (

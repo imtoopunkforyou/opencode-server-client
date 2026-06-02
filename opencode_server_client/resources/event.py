@@ -1,4 +1,5 @@
 """Event stream endpoint (Server-Sent Events)."""
+
 import json
 from collections.abc import AsyncIterator, Iterator
 
@@ -14,7 +15,7 @@ _EVENT_PATH = '/event'
 def _parse_line(line: str) -> OpencodeEvent | None:
     if not line.startswith(_DATA_PREFIX):
         return None
-    chunk = line[len(_DATA_PREFIX):].strip()
+    chunk = line[len(_DATA_PREFIX) :].strip()
     if not chunk:
         return None
     try:

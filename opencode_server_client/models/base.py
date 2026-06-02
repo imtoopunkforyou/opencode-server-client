@@ -1,4 +1,5 @@
 """Base response and error dataclasses."""
+
 from dataclasses import dataclass
 
 

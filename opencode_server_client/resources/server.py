@@ -1,4 +1,5 @@
 """Server-level (/global/*) endpoints."""
+
 from opencode_server_client._decode import decode
 from opencode_server_client._transport import RawResponse, RequestSpec
 from opencode_server_client.models.base import OpencodeErrorResponse

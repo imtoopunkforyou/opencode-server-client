@@ -1,4 +1,5 @@
 """Catalog endpoints: path (no query) and mcp (open map)."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode

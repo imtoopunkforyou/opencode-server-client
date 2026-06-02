@@ -1,4 +1,5 @@
 """Find endpoints (/find, /find/file, /find/symbol)."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -123,9 +124,7 @@ class FindResource(_SyncResource):
             workspace=workspace,
             extra={_QUERY_KEY: query},
         )
-        return _parse_symbols(
-            self._transport.send(_build_symbols(built))
-        )
+        return _parse_symbols(self._transport.send(_build_symbols(built)))
 
 
 class AsyncFindResource(_AsyncResource):
@@ -145,9 +144,7 @@ class AsyncFindResource(_AsyncResource):
             workspace=workspace,
             extra={'pattern': pattern},
         )
-        return _parse_text(
-            await self._transport.send(_build_text(query))
-        )
+        return _parse_text(await self._transport.send(_build_text(query)))
 
     async def files(
         self,
@@ -169,9 +166,7 @@ class AsyncFindResource(_AsyncResource):
             workspace=workspace,
             extra=extra,
         )
-        return _parse_files(
-            await self._transport.send(_build_files(built))
-        )
+        return _parse_files(await self._transport.send(_build_files(built)))
 
     async def symbols(
         self,
@@ -187,6 +182,4 @@ class AsyncFindResource(_AsyncResource):
             workspace=workspace,
             extra={_QUERY_KEY: query},
         )
-        return _parse_symbols(
-            await self._transport.send(_build_symbols(built))
-        )
+        return _parse_symbols(await self._transport.send(_build_symbols(built)))

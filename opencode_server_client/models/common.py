@@ -1,4 +1,5 @@
 """Shared timestamp model reused across multiple domain models."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import as_map, opt_int

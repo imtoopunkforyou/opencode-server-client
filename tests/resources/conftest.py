@@ -20,7 +20,9 @@ def make_async_client(handler) -> OpencodeAsyncClient:
 @pytest.fixture
 def health_handler():
     """Return an httpx handler that always responds with a healthy payload."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Handle the request by returning a healthy response."""
         return httpx.Response(200, json={'healthy': True, 'version': '1.15.13'})
+
     return handler

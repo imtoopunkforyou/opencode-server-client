@@ -1,4 +1,5 @@
 """Tests for find namespace endpoints: text, files, symbols."""
+
 import httpx
 
 from opencode_server_client.models.base import OpencodeErrorResponse
@@ -42,9 +43,11 @@ _FILES_PAYLOAD = ['src/main.py', 'src/utils.py']
 
 def _json_handler(payload, status=200):
     """Return an httpx handler that always responds with *payload*."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Handle the request by returning the configured JSON payload."""
         return httpx.Response(status, json=payload)
+
     return handler
 
 
@@ -222,6 +225,7 @@ def test_find_symbols_sends_query_param():
 
 def test_find_error_maps_to_error_response():
     """A non-2xx response is decoded as OpencodeErrorResponse."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a 500 error payload."""
         return httpx.Response(

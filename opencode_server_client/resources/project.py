@@ -1,4 +1,5 @@
 """Project endpoints (/project, /project/current)."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -109,6 +110,4 @@ class AsyncProjectResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_current(
-            await self._transport.send(_build_current(query))
-        )
+        return _parse_current(await self._transport.send(_build_current(query)))

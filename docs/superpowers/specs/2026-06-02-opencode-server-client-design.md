@@ -217,7 +217,7 @@ Rules:
   callers narrow on `resp.code`.
 - Collections inside `body` use `tuple[...]` (immutability under `frozen=True`).
 
-The `frozen + slots` inheritance with a re-declared `body` field, narrowing `object` to a
+The `frozen + slots` inheritance with a redeclared `body` field, narrowing `object` to a
 concrete type, is verified to pass `mypy --strict`, `ruff`, and `flake8`/wemake on the
 target Python 3.10: no `__dict__`, immutability enforced, no override error.
 

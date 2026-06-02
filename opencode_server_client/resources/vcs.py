@@ -1,4 +1,5 @@
 """VCS endpoints (/vcs, /vcs/status, /vcs/diff)."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -143,9 +144,7 @@ class AsyncVcsResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_status(
-            await self._transport.send(_build_status(query))
-        )
+        return _parse_status(await self._transport.send(_build_status(query)))
 
     async def diff(
         self,

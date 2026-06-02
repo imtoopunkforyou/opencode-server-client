@@ -1,4 +1,5 @@
 """File endpoints (/file, /file/content, /file/status)."""
+
 from collections.abc import Mapping
 
 from opencode_server_client._decode import decode
@@ -30,9 +31,7 @@ def _build_list(query: Mapping[str, str]) -> RequestSpec:
 
 
 def _ok_list(code: int, payload: object) -> OpencodeFilesResponse:
-    return OpencodeFilesResponse(
-        code=code, body=files_from_payload(payload)
-    )
+    return OpencodeFilesResponse(code=code, body=files_from_payload(payload))
 
 
 def _parse_list(raw: RawResponse) -> _ListResult:
@@ -134,9 +133,7 @@ class AsyncFileResource(_AsyncResource):
             workspace=workspace,
             extra={_PATH_KEY: path},
         )
-        return _parse_list(
-            await self._transport.send(_build_list(query))
-        )
+        return _parse_list(await self._transport.send(_build_list(query)))
 
     async def read(
         self,
@@ -152,9 +149,7 @@ class AsyncFileResource(_AsyncResource):
             workspace=workspace,
             extra={_PATH_KEY: path},
         )
-        return _parse_read(
-            await self._transport.send(_build_read(query))
-        )
+        return _parse_read(await self._transport.send(_build_read(query)))
 
     async def status(
         self,
@@ -168,6 +163,4 @@ class AsyncFileResource(_AsyncResource):
             directory=directory,
             workspace=workspace,
         )
-        return _parse_status(
-            await self._transport.send(_build_status(query))
-        )
+        return _parse_status(await self._transport.send(_build_status(query)))

@@ -21,9 +21,7 @@ def test_health_sync(health_handler):
     def handler(request: httpx.Request) -> httpx.Response:
         """Capture request and return healthy payload."""
         captured['request'] = request
-        return httpx.Response(
-            200, json={'healthy': True, 'version': '1.15.13'}
-        )
+        return httpx.Response(200, json={'healthy': True, 'version': '1.15.13'})
 
     with make_client(handler) as oc:
         resp = oc.server.health()
@@ -45,12 +43,14 @@ async def test_health_async(health_handler):
 
 def test_health_error_maps_to_error_response():
     """A 400 response from the server is decoded as OpencodeErrorResponse."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a 400 error payload."""
         return httpx.Response(
             400,
             json={'name': 'BadRequest', 'data': {'message': 'bad'}},
         )
+
     with make_client(handler) as oc:
         resp = oc.server.health()
     assert isinstance(resp, OpencodeErrorResponse)
@@ -65,9 +65,7 @@ def test_server_config_sync():
     def handler(request: httpx.Request) -> httpx.Response:
         """Capture request and return a config payload."""
         captured['request'] = request
-        return httpx.Response(
-            200, json={'username': 'u', 'autoupdate': False}
-        )
+        return httpx.Response(200, json={'username': 'u', 'autoupdate': False})
 
     with make_client(handler) as oc:
         resp = oc.server.config()
@@ -85,9 +83,7 @@ def test_server_update_config_sync():
     def handler(request: httpx.Request) -> httpx.Response:
         """Capture request and return updated config payload."""
         captured['request'] = request
-        return httpx.Response(
-            200, json={'username': 'u', 'autoupdate': True}
-        )
+        return httpx.Response(200, json={'username': 'u', 'autoupdate': True})
 
     with make_client(handler) as oc:
         resp = oc.server.update_config({'autoupdate': True})

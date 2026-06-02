@@ -1,4 +1,5 @@
 """The synchronous and asynchronous OpenCode clients."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass

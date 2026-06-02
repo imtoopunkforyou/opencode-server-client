@@ -1,4 +1,5 @@
 """OpenCode model dataclasses (capabilities, cost, limits, and the model)."""
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import (
@@ -9,7 +10,6 @@ from opencode_server_client.models._convert import (
     opt_float,
     opt_str,
 )
-from opencode_server_client.models.base import OpencodeBaseResponse
 
 
 @dataclass(frozen=True, slots=True)
@@ -134,10 +134,3 @@ class OpencodeModel:
             limit=OpencodeModelLimit.from_payload(src.get('limit')),
             options=dict(as_map(src.get('options'))),
         )
-
-
-@dataclass(frozen=True, slots=True)
-class OpencodeModelResponse(OpencodeBaseResponse):
-    """Response wrapper for a single model."""
-
-    body: OpencodeModel

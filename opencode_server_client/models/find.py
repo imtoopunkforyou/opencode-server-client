@@ -1,4 +1,5 @@
 """Find domain models and response wrappers."""
+
 from dataclasses import dataclass, field
 
 from opencode_server_client.models._convert import (
@@ -115,9 +116,7 @@ class OpencodeSymbolsResponse(OpencodeBaseResponse):
 
 def matches_from_payload(payload: object) -> tuple[OpencodeMatch, ...]:
     """Parse a list payload into a tuple of match objects."""
-    return tuple(
-        OpencodeMatch.from_payload(entry) for entry in as_seq(payload)
-    )
+    return tuple(OpencodeMatch.from_payload(entry) for entry in as_seq(payload))
 
 
 def symbols_from_payload(payload: object) -> tuple[OpencodeSymbol, ...]:

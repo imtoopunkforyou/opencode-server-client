@@ -1,4 +1,5 @@
 """Async resource namespace classes."""
+
 from opencode_server_client.resources._catalog_list import (
     AsyncAgentResource as AsyncAgentResource,
 )

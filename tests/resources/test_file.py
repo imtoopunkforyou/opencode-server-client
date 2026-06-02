@@ -1,4 +1,5 @@
 """Tests for file namespace endpoints: list, read, status."""
+
 import httpx
 
 from opencode_server_client.models.base import OpencodeErrorResponse
@@ -38,9 +39,11 @@ _FILE_STATUS_PAYLOAD = [
 
 def _json_handler(payload, status=200):
     """Return an httpx handler that always responds with *payload*."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Handle request by returning the configured JSON payload."""
         return httpx.Response(status, json=payload)
+
     return handler
 
 
@@ -194,6 +197,7 @@ def test_file_status_empty():
 
 def test_file_error_maps_to_error_response():
     """A non-2xx response is decoded as OpencodeErrorResponse."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a 404 error payload."""
         return httpx.Response(

@@ -1,6 +1,7 @@
 # AGENTS
 
 ## Before you start
+
 - Check out the project's `pyproject.toml` file;
 
 ## Setup commands
@@ -23,7 +24,7 @@
 
 ## Code style
 
-- For static code verification, we use linters: 
+- For static code verification, we use linters:
 [ruff](https://docs.astral.sh/ruff/),
 [wemake-python-styleguide](https://github.com/wemake-services/wemake-python-styleguide),
 [flake8-digit-separator](https://github.com/imtoopunkforyou/flake8-digit-separator),
@@ -36,7 +37,6 @@
 Disabling rules via noqa (as well as in ruff.toml or setup.cfg) is STRICTLY
 PROHIBITED. But if you think that you can't do anything else, then skip this
 rule, the developer will figure it out on his own.
-
 
 ## Testing
 
@@ -53,14 +53,17 @@ The main conftest is located in `tests/conftest.py`. For example:
 
 ```text
 ├── opencode_server_client
-│   └── version.py
+│   └── version.py
 ...
 └── tests
     ├── __init__.py
     └── test_version.py
 ```
-We are very seriously monitoring the structure of our mock.  
+
+We are very seriously monitoring the structure of our mock.
+
 STRICTLY FOLLOW THE FOLLOWING STRUCTURE WHEN WRITING AND USING MOCKUPS:
+
 ```python
 # tests/some_dir/conftest.py
 from unittest.mock import AsyncMock
@@ -109,7 +112,6 @@ and callable(getattr(f, m)))))"
 ### Running tests
 
 To start the test session, use `make tests`.
-
 
 ## Communication with the developer
 

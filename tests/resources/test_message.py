@@ -1,4 +1,5 @@
 """Tests for the message namespace resource."""
+
 import json
 
 import httpx
@@ -53,9 +54,7 @@ def test_message_prompt_posts_parts_to_session():
         captured['body'] = json.loads(request.content)
         return httpx.Response(200, json=_bundle_payload())
 
-    prompt = OpencodeMessagePrompt(
-        parts=[{'type': 'text', 'text': 'hello'}]
-    )
+    prompt = OpencodeMessagePrompt(parts=[{'type': 'text', 'text': 'hello'}])
     with make_client(handler) as oc:
         resp = oc.message.prompt(_SESSION_ID, prompt)
 
@@ -110,6 +109,7 @@ def test_message_get_interpolates_both_ids():
 
 def test_message_list_parses_bundle_list():
     """message.list() returns OpencodeMessagesResponse with bundles."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a list of one bundle."""
         return httpx.Response(200, json=[_bundle_payload()])
@@ -125,6 +125,7 @@ def test_message_list_parses_bundle_list():
 
 def test_message_list_empty_returns_empty_tuple():
     """message.list() with empty payload returns empty tuple body."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return empty list."""
         return httpx.Response(200, json=[])
@@ -198,6 +199,7 @@ def test_message_shell_sends_correct_body():
 
 def test_message_get_returns_error_on_404():
     """message.get() returns OpencodeErrorResponse on 404."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return 404 error."""
         return httpx.Response(
@@ -230,6 +232,7 @@ def test_message_bundle_error_field_parsed():
 
 async def test_message_prompt_async():
     """message.prompt() works via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a bundle payload."""
         return httpx.Response(200, json=_bundle_payload())
@@ -244,6 +247,7 @@ async def test_message_prompt_async():
 
 async def test_message_list_async():
     """message.list() works via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a list of bundles."""
         return httpx.Response(
@@ -259,6 +263,7 @@ async def test_message_list_async():
 
 async def test_message_get_async():
     """message.get() works via the async client."""
+
     def handler(request: httpx.Request) -> httpx.Response:
         """Return a bundle payload."""
         return httpx.Response(200, json=_bundle_payload())

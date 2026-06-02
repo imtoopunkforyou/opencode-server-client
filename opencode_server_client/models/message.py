@@ -4,6 +4,7 @@ User vs assistant messages differ in which fields are populated;
 full per-role typing is deferred to phase 2.  All raw payload kept
 in ``raw`` for forward-compatibility.
 """
+
 from dataclasses import dataclass
 
 from opencode_server_client.models._convert import (
@@ -54,8 +55,7 @@ class OpencodeMessage:
             model_id=opt_str(src, 'modelID'),
             cost=opt_float(src, 'cost'),
             error=(
-                dict(as_map(err_found))
-                if isinstance(err_found, dict) else None
+                dict(as_map(err_found)) if isinstance(err_found, dict) else None
             ),
             raw=dict(src),
         )
@@ -118,8 +118,7 @@ def bundles_from_payload(
 ) -> 'tuple[OpencodeMessageBundle, ...]':
     """Parse a list payload into a tuple of message bundles."""
     return tuple(
-        OpencodeMessageBundle.from_payload(entry)
-        for entry in as_seq(payload)
+        OpencodeMessageBundle.from_payload(entry) for entry in as_seq(payload)
     )
 
 
