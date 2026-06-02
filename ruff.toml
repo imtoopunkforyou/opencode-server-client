@@ -26,6 +26,7 @@ select = [
 ignore = [
     "D104",
     "COM812",
+    "D100",
 ]
 external = [ "WPS" ]
 
@@ -43,7 +44,6 @@ external = [ "WPS" ]
 "opencode_server_client/version.py" = [
     "D205",
     "D415",
-    "D100",
 ]
 
 [format]
