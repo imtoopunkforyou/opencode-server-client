@@ -43,6 +43,18 @@ def build_error(code: int, payload: object) -> OpencodeErrorResponse:
     )
 
 
+@dataclass(frozen=True, slots=True)
+class OpencodeBoolResponse(OpencodeBaseResponse):
+    """Response whose body is a single boolean flag."""
+
+    body: bool
+
+
+def ok_bool(code: int, payload: object) -> OpencodeBoolResponse:
+    """Build a boolean response from a payload."""
+    return OpencodeBoolResponse(code=code, body=bool(payload))
+
+
 def _error_message(payload: dict[str, object]) -> str | None:
     top = payload.get('message')
     if isinstance(top, str):
