@@ -26,6 +26,9 @@ from opencode_server_client.resources.file import (
 from opencode_server_client.resources.find import (
     AsyncFindResource as AsyncFindResource,
 )
+from opencode_server_client.resources.message import (
+    AsyncMessageResource as AsyncMessageResource,
+)
 from opencode_server_client.resources.project import (
     AsyncProjectResource as AsyncProjectResource,
 )

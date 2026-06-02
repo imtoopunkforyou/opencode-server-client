@@ -21,6 +21,7 @@ from opencode_server_client.resources import (
     FindResource,
     LspResource,
     McpResource,
+    MessageResource,
     PathResource,
     ProjectResource,
     ProviderResource,
@@ -37,6 +38,7 @@ from opencode_server_client.resources._async import (
     AsyncFindResource,
     AsyncLspResource,
     AsyncMcpResource,
+    AsyncMessageResource,
     AsyncPathResource,
     AsyncProjectResource,
     AsyncProviderResource,
@@ -99,6 +101,7 @@ class OpencodeClient:
         self.mcp = McpResource(self._transport)
         self.project = ProjectResource(self._transport)
         self.provider = ProviderResource(self._transport)
+        self.message = MessageResource(self._transport)
         self.session = SessionResource(self._transport)
         self.vcs = VcsResource(self._transport)
 
@@ -151,6 +154,7 @@ class OpencodeAsyncClient:
         self.mcp = AsyncMcpResource(self._transport)
         self.project = AsyncProjectResource(self._transport)
         self.provider = AsyncProviderResource(self._transport)
+        self.message = AsyncMessageResource(self._transport)
         self.session = AsyncSessionResource(self._transport)
         self.vcs = AsyncVcsResource(self._transport)
 

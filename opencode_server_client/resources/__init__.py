@@ -22,6 +22,9 @@ from opencode_server_client.resources.config import (
 )
 from opencode_server_client.resources.file import FileResource as FileResource
 from opencode_server_client.resources.find import FindResource as FindResource
+from opencode_server_client.resources.message import (
+    MessageResource as MessageResource,
+)
 from opencode_server_client.resources.project import (
     ProjectResource as ProjectResource,
 )
