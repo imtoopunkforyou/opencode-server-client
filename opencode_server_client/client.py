@@ -22,6 +22,7 @@ from opencode_server_client.resources import (
     ProjectResource,
     ServerResource,
     SkillResource,
+    VcsResource,
 )
 from opencode_server_client.resources._async import (
     AsyncAgentResource,
@@ -32,8 +33,8 @@ from opencode_server_client.resources._async import (
     AsyncProjectResource,
     AsyncServerResource,
     AsyncSkillResource,
+    AsyncVcsResource,
 )
-from opencode_server_client.resources.vcs import AsyncVcsResource, VcsResource
 
 _SyncTransportArg = httpx.BaseTransport | None
 _AsyncTransportArg = httpx.AsyncBaseTransport | None
