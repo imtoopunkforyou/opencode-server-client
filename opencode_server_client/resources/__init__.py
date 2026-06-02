@@ -23,3 +23,4 @@ from opencode_server_client.resources.project import (
 from opencode_server_client.resources.server import (
     ServerResource as ServerResource,
 )
+from opencode_server_client.resources.vcs import VcsResource as VcsResource

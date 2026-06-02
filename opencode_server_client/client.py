@@ -33,6 +33,7 @@ from opencode_server_client.resources._async import (
     AsyncServerResource,
     AsyncSkillResource,
 )
+from opencode_server_client.resources.vcs import AsyncVcsResource, VcsResource
 
 _SyncTransportArg = httpx.BaseTransport | None
 _AsyncTransportArg = httpx.AsyncBaseTransport | None
@@ -83,6 +84,7 @@ class OpencodeClient:
         self.lsp = LspResource(self._transport)
         self.mcp = McpResource(self._transport)
         self.project = ProjectResource(self._transport)
+        self.vcs = VcsResource(self._transport)
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -129,6 +131,7 @@ class OpencodeAsyncClient:
         self.lsp = AsyncLspResource(self._transport)
         self.mcp = AsyncMcpResource(self._transport)
         self.project = AsyncProjectResource(self._transport)
+        self.vcs = AsyncVcsResource(self._transport)
 
     async def aclose(self) -> None:
         """Close the underlying HTTP client."""

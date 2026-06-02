@@ -23,3 +23,6 @@ from opencode_server_client.resources.project import (
 from opencode_server_client.resources.server import (
     AsyncServerResource as AsyncServerResource,
 )
+from opencode_server_client.resources.vcs import (
+    AsyncVcsResource as AsyncVcsResource,
+)
