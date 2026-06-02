@@ -57,6 +57,14 @@ def get_float(src: Mapping[str, object], key: str) -> float:
     return float(0)
 
 
+def opt_float(src: Mapping[str, object], key: str) -> float | None:
+    """Read an optional number field."""
+    found = src.get(key)
+    if isinstance(found, (int, float)):
+        return float(found)
+    return None
+
+
 def str_tuple(payload: object) -> tuple[str, ...]:
     """Coerce a payload into a tuple of strings."""
     return tuple(entry for entry in as_seq(payload) if isinstance(entry, str))
