@@ -35,6 +35,9 @@ from opencode_server_client.resources.provider import (
 from opencode_server_client.resources.server import (
     AsyncServerResource as AsyncServerResource,
 )
+from opencode_server_client.resources.session import (
+    AsyncSessionResource as AsyncSessionResource,
+)
 from opencode_server_client.resources.vcs import (
     AsyncVcsResource as AsyncVcsResource,
 )

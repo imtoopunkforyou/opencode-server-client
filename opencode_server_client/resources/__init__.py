@@ -31,4 +31,7 @@ from opencode_server_client.resources.provider import (
 from opencode_server_client.resources.server import (
     ServerResource as ServerResource,
 )
+from opencode_server_client.resources.session import (
+    SessionResource as SessionResource,
+)
 from opencode_server_client.resources.vcs import VcsResource as VcsResource

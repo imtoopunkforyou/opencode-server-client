@@ -68,3 +68,8 @@ def opt_float(src: Mapping[str, object], key: str) -> float | None:
 def str_tuple(payload: object) -> tuple[str, ...]:
     """Coerce a payload into a tuple of strings."""
     return tuple(entry for entry in as_seq(payload) if isinstance(entry, str))
+
+
+def compact(pairs: Mapping[str, object]) -> dict[str, object]:
+    """Drop keys whose value is None."""
+    return {key: found for key, found in pairs.items() if found is not None}
