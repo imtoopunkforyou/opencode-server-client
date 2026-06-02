@@ -1335,7 +1335,7 @@ files = [
     {file = "typing_extensions-4.15.0-py3-none-any.whl", hash = "sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"},
     {file = "typing_extensions-4.15.0.tar.gz", hash = "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"},
 ]
-markers = {main = "python_version < \"3.13\"", tests = "python_version < \"3.13\""}
+markers = {tests = "python_version < \"3.13\""}
 
 [[package]]
 name = "tzdata"
@@ -1382,4 +1382,4 @@ pygments = ">=2.19,<3.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "aadf96fd430d2abfd2e4fcb0cc38e13866f6ec0fb4cacd51f12a1b9b33289b60"
+content-hash = "5c08afcb564e6631c06f77d697163c04c60f9f8b27341a7779f32d15ac59964a"

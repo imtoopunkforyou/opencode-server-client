@@ -27,7 +27,6 @@ ignore = [
     "D104",
     "COM812",
     "D100",
-    "PYI034",
 ]
 external = [ "WPS" ]
 
@@ -40,9 +39,6 @@ external = [ "WPS" ]
     "ARG001",
     "PLR0913",
     "PLR2004",
-    "D103",
-    "E501",
-    "PLC0415",
 ]
 "opencode_server_client/version.py" = [
     "D205",

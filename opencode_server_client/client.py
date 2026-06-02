@@ -1,9 +1,16 @@
 """The synchronous and asynchronous OpenCode clients."""
-from collections.abc import Mapping
+from __future__ import annotations
+
 from dataclasses import dataclass
-from types import TracebackType
+from typing import TYPE_CHECKING
 
 import httpx
+
+if TYPE_CHECKING:
+    from collections.abc import Mapping
+    from types import TracebackType
+
+    from typing_extensions import Self
 
 from opencode_server_client._transport import AsyncTransport, SyncTransport
 from opencode_server_client.resources.server import (
@@ -58,7 +65,7 @@ class OpencodeClient:
         """Close the underlying HTTP client."""
         self._transport.close()
 
-    def __enter__(self) -> 'OpencodeClient':
+    def __enter__(self) -> Self:
         """Enter the context manager."""
         return self
 
@@ -97,7 +104,7 @@ class OpencodeAsyncClient:
         """Close the underlying HTTP client."""
         await self._transport.aclose()
 
-    async def __aenter__(self) -> 'OpencodeAsyncClient':
+    async def __aenter__(self) -> Self:
         """Enter the async context manager."""
         return self
 

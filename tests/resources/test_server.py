@@ -9,6 +9,7 @@ from tests.resources.conftest import make_async_client, make_client
 
 
 def test_health_sync(health_handler):
+    """server.health() returns a typed OpencodeHealthResponse."""
     with make_client(health_handler) as oc:
         resp = oc.server.health()
     assert isinstance(resp, OpencodeHealthResponse)
@@ -17,15 +18,20 @@ def test_health_sync(health_handler):
 
 
 async def test_health_async(health_handler):
+    """server.health() returns a typed response via the async client."""
     async with make_async_client(health_handler) as oc:
         resp = await oc.server.health()
     assert resp.body.version == '1.15.13'
 
 
 def test_health_error_maps_to_error_response():
+    """A 400 response from the server is decoded as OpencodeErrorResponse."""
     def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(400, json={'name': 'BadRequest',
-                                         'data': {'message': 'bad'}})
+        """Return a 400 error payload."""
+        return httpx.Response(
+            400,
+            json={'name': 'BadRequest', 'data': {'message': 'bad'}},
+        )
     with make_client(handler) as oc:
         resp = oc.server.health()
     assert isinstance(resp, OpencodeErrorResponse)
