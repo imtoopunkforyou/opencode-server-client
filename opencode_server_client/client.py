@@ -13,27 +13,25 @@ if TYPE_CHECKING:
     from typing_extensions import Self
 
 from opencode_server_client._transport import AsyncTransport, SyncTransport
-from opencode_server_client.resources._catalog_list import (
+from opencode_server_client.resources import (
     AgentResource,
-    AsyncAgentResource,
-    AsyncCommandResource,
     CommandResource,
-)
-from opencode_server_client.resources._catalog_misc import (
-    AsyncMcpResource,
-    AsyncPathResource,
+    LspResource,
     McpResource,
     PathResource,
-)
-from opencode_server_client.resources._catalog_skill_lsp import (
-    AsyncLspResource,
-    AsyncSkillResource,
-    LspResource,
+    ProjectResource,
+    ServerResource,
     SkillResource,
 )
-from opencode_server_client.resources.server import (
+from opencode_server_client.resources._async import (
+    AsyncAgentResource,
+    AsyncCommandResource,
+    AsyncLspResource,
+    AsyncMcpResource,
+    AsyncPathResource,
+    AsyncProjectResource,
     AsyncServerResource,
-    ServerResource,
+    AsyncSkillResource,
 )
 
 _SyncTransportArg = httpx.BaseTransport | None
@@ -84,6 +82,7 @@ class OpencodeClient:
         self.path = PathResource(self._transport)
         self.lsp = LspResource(self._transport)
         self.mcp = McpResource(self._transport)
+        self.project = ProjectResource(self._transport)
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -129,6 +128,7 @@ class OpencodeAsyncClient:
         self.path = AsyncPathResource(self._transport)
         self.lsp = AsyncLspResource(self._transport)
         self.mcp = AsyncMcpResource(self._transport)
+        self.project = AsyncProjectResource(self._transport)
 
     async def aclose(self) -> None:
         """Close the underlying HTTP client."""

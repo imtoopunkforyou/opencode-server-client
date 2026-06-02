@@ -1,25 +1,25 @@
-"""Sync resource namespace classes."""
+"""Async resource namespace classes."""
 from opencode_server_client.resources._catalog_list import (
-    AgentResource as AgentResource,
+    AsyncAgentResource as AsyncAgentResource,
 )
 from opencode_server_client.resources._catalog_list import (
-    CommandResource as CommandResource,
+    AsyncCommandResource as AsyncCommandResource,
 )
 from opencode_server_client.resources._catalog_misc import (
-    McpResource as McpResource,
+    AsyncMcpResource as AsyncMcpResource,
 )
 from opencode_server_client.resources._catalog_misc import (
-    PathResource as PathResource,
+    AsyncPathResource as AsyncPathResource,
 )
 from opencode_server_client.resources._catalog_skill_lsp import (
-    LspResource as LspResource,
+    AsyncLspResource as AsyncLspResource,
 )
 from opencode_server_client.resources._catalog_skill_lsp import (
-    SkillResource as SkillResource,
+    AsyncSkillResource as AsyncSkillResource,
 )
 from opencode_server_client.resources.project import (
-    ProjectResource as ProjectResource,
+    AsyncProjectResource as AsyncProjectResource,
 )
 from opencode_server_client.resources.server import (
-    ServerResource as ServerResource,
+    AsyncServerResource as AsyncServerResource,
 )
