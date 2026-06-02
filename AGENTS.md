@@ -97,9 +97,7 @@ and callable(getattr(f, m)))))"
 - Before writing tests, study `tests/conftest.py` for available fixtures;
 - It is allowed to write only `test_*` functions, `Test*` classes are
   prohibited;
-- All requests to external services should be mocked, but we do not mock
-  requests to the DataBase (PostgreSQL); 
-  instead, we spin up test instances for them;
+- All requests to external services should be mocked;
 - For names and values that do not affect test behavior or assertions, use the
   `fake` fixture (for example, `fake.name()` for names fields);
 - Do not use module-level mutable constants (e.g. lists, dicts) in conftest or
