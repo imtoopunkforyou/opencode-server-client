@@ -39,9 +39,10 @@ def test_build_query_drops_none_and_merges():
 
 
 def test_send_returns_rawresponse_with_decoded_json():
-    """send() returns a RawResponse with decoded JSON payload."""
+    """send() forwards spec.query as-is; caller pre-merges defaults."""
     transport = _sync_transport()
-    raw = transport.send(RequestSpec('GET', '/echo', {'path': 'a'}, None))
+    query = build_query(transport.defaults, extra={'path': 'a'})
+    raw = transport.send(RequestSpec('GET', '/echo', query, None))
     assert isinstance(raw, RawResponse)
     assert raw.code == 200
     assert raw.payload == {

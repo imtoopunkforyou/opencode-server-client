@@ -34,15 +34,19 @@ def get_bool(src: Mapping[str, object], key: str) -> bool:
 
 
 def get_int(src: Mapping[str, object], key: str) -> int:
-    """Read a required integer field (missing → 0)."""
+    """Read a required integer field (missing -> 0)."""
     found = src.get(key)
-    return found if isinstance(found, int) else 0
+    if isinstance(found, int) and not isinstance(found, bool):
+        return found
+    return 0
 
 
 def opt_int(src: Mapping[str, object], key: str) -> int | None:
     """Read an optional integer field."""
     found = src.get(key)
-    return found if isinstance(found, int) else None
+    if isinstance(found, int) and not isinstance(found, bool):
+        return found
+    return None
 
 
 def get_float(src: Mapping[str, object], key: str) -> float:

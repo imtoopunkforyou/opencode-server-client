@@ -70,11 +70,10 @@ class SyncTransport:
 
     def send(self, spec: RequestSpec) -> RawResponse:
         """Execute *spec* and return the decoded response."""
-        merged = {**self._defaults, **spec.query}
         response = self._client.request(
             spec.method,
             spec.path,
-            params=merged,
+            params=dict(spec.query),
             json=spec.json_body,
         )
         return _decode(response)
@@ -103,11 +102,10 @@ class AsyncTransport:
 
     async def send(self, spec: RequestSpec) -> RawResponse:
         """Execute *spec* and return the decoded response."""
-        merged = {**self._defaults, **spec.query}
         response = await self._client.request(
             spec.method,
             spec.path,
-            params=merged,
+            params=dict(spec.query),
             json=spec.json_body,
         )
         return _decode(response)
