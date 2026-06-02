@@ -9,7 +9,13 @@
 A Python HTTP client library for the [OpenCode web server](https://opencode.ai/docs/server/),
 built on [`httpx`](https://www.python-httpx.org/). It exposes both a **synchronous**
 and an **asynchronous** client with identical method surfaces. Every method returns an
-immutable dataclass carrying the HTTP `code` and a typed `data` payload.
+immutable dataclass carrying the HTTP `code` and a typed `body` payload.
+
+> **Naming note:** the response payload field is `body`, not `data`. The project's
+> wemake-python-styleguide (`WPS110`) forbids the identifier `data`, and disabling rules
+> is prohibited by `AGENTS.md`. `body` is the lint-clean equivalent. The same constraint
+> rules out internal use of `info`, `params`, `result`, `value`, `content`, `item`; their
+> approved substitutes (`message`, `query`, `payload`, `text`, `entry`, …) are used instead.
 
 ## 2. Goals / Non-goals
 
@@ -42,9 +48,9 @@ immutable dataclass carrying the HTTP `code` and a typed `data` payload.
 from opencode_server_client import OpencodeClient
 
 oc = OpencodeClient(base_url="http://127.0.0.1:8080")
-resp = oc.session.create(title="demo")
+resp = oc.session.create(OpencodeSessionCreate(title="demo"))
 if resp.code == 200:
-    session = resp.data          # typed OpencodeSession
+    session = resp.body          # typed OpencodeSession
 oc.close()                       # or:  with OpencodeClient(...) as oc:
 ```
 
@@ -52,8 +58,13 @@ oc.close()                       # or:  with OpencodeClient(...) as oc:
 from opencode_server_client import OpencodeAsyncClient
 
 async with OpencodeAsyncClient(base_url="http://127.0.0.1:8080") as oc:
-    resp = await oc.session.create(title="demo")
+    resp = await oc.session.create(OpencodeSessionCreate(title="demo"))
 ```
+
+> **Argument limits:** ruff `PLR0913` and wemake `WPS211` cap a callable at **5 parameters,
+> counting `self`** (verified). Endpoints whose request body has many fields therefore take a
+> single frozen *input* dataclass (e.g. `OpencodeSessionCreate`) plus optional
+> `directory` / `workspace` overrides, instead of a long keyword list.
 
 ## 4. Scope — v1 core (~46 methods)
 
@@ -168,7 +179,7 @@ subclasses that narrow `data` to a typed model.
 @dataclass(frozen=True, slots=True)
 class OpencodeBaseResponse:
     code: int
-    data: object
+    body: object
 
 @dataclass(frozen=True, slots=True)
 class OpencodeHealthData:
@@ -177,32 +188,38 @@ class OpencodeHealthData:
 
 @dataclass(frozen=True, slots=True)
 class OpencodeHealthResponse(OpencodeBaseResponse):
-    data: OpencodeHealthData
+    body: OpencodeHealthData
 
 @dataclass(frozen=True, slots=True)
 class OpencodeError:
     name: str
     message: str | None
-    data: dict[str, object] | None     # remaining raw error fields
+    payload: dict[str, object] | None     # remaining raw error fields
 
 @dataclass(frozen=True, slots=True)
 class OpencodeErrorResponse(OpencodeBaseResponse):
-    data: OpencodeError
+    body: OpencodeError
 ```
 
 Rules:
 
 - **2xx** → typed `Opencode<...>Response` (e.g. `OpencodeHealthResponse`).
 - **4xx / 5xx** → `OpencodeErrorResponse` with a typed `OpencodeError`. No exception is
-  raised on HTTP status (per design decision).
+  raised on HTTP status (per design decision). The server uses two error envelope shapes —
+  `{"name": ..., "data": {"message": ...}}` and `{"_tag": ..., "message": ...}`; the parser
+  reads `name`/`_tag` and the nested-or-top-level `message`, keeping the full dict in
+  `OpencodeError.payload`.
 - **Transport failures** from httpx (`httpx.RequestError` — connection refused, timeout)
   propagate unchanged; they are not HTTP responses.
+- HTTP status classification uses `http.HTTPStatus` (not integer literals) to satisfy
+  wemake `WPS432`.
 - Each method's return type is the union `Opencode<...>Response | OpencodeErrorResponse`;
   callers narrow on `resp.code`.
-- Collections inside `data` use `tuple[...]` (immutability under `frozen=True`).
+- Collections inside `body` use `tuple[...]` (immutability under `frozen=True`).
 
-The `frozen + slots` inheritance with a re-declared `data` field is verified to work on
-the target Python 3.10 (and 3.14): no `__dict__`, immutability enforced.
+The `frozen + slots` inheritance with a re-declared `body` field, narrowing `object` to a
+concrete type, is verified to pass `mypy --strict`, `ruff`, and `flake8`/wemake on the
+target Python 3.10: no `__dict__`, immutability enforced, no override error.
 
 ## 8. Streaming — `oc.event.subscribe`
 
@@ -223,23 +240,35 @@ or the connection closes.
 
 ## 9. Client configuration
 
+To stay within the 5-parameter limit (`PLR0913`/`WPS211`, counting `self`), connection
+settings live in a frozen options object:
+
 ```python
-OpencodeClient(
-    base_url: str,
-    *,
-    timeout: float = 30.0,
-    headers: Mapping[str, str] | None = None,
-    directory: str | None = None,     # default for the ?directory= query param
-    workspace: str | None = None,     # default for the ?workspace= query param
-    transport: httpx.BaseTransport | None = None,   # for httpx.MockTransport in tests
-)
+@dataclass(frozen=True, slots=True)
+class OpencodeClientOptions:
+    timeout: float = 30.0
+    headers: Mapping[str, str] | None = None
+    directory: str | None = None       # default for the ?directory= query param
+    workspace: str | None = None        # default for the ?workspace= query param
+
+class OpencodeClient:
+    def __init__(
+        self,
+        base_url: str,
+        *,
+        options: OpencodeClientOptions | None = None,
+        transport: httpx.BaseTransport | None = None,   # httpx.MockTransport in tests
+    ) -> None: ...
 ```
 
-- `directory` / `workspace` are applied as default query params on routes that accept them
-  and are overridable per call.
+- `OpencodeClient("http://127.0.0.1:8080")` works with all defaults.
+- `directory` / `workspace` from the options become default query params on routes that
+  accept them, and are overridable per call (each such method takes optional
+  `directory` / `workspace` keyword arguments).
 - `close()` / `aclose()` plus context-manager support (`__enter__`/`__exit__`,
   `__aenter__`/`__aexit__`).
-- The async client accepts `httpx.MockTransport` too (it is transport-agnostic).
+- `OpencodeAsyncClient` has the same signature and accepts `httpx.MockTransport` too (it is
+  transport-agnostic).
 
 ## 10. Testing
 
