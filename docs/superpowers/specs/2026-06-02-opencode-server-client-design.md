@@ -41,7 +41,9 @@ immutable dataclass carrying the HTTP `code` and a typed `body` payload.
 
 - `OpencodeClient` — synchronous; mirrors `httpx.Client`.
 - `OpencodeAsyncClient` — asynchronous; mirrors `httpx.AsyncClient`.
-- Resource namespaces are attributes on the client (e.g. `oc.session`, `oc.file`).
+- Resource namespaces are attributes on the client (e.g. `oc.session`, `oc.files`).
+  (The file namespace is `oc.files` (plural) because wemake `WPS110` forbids the
+  identifier `file`.)
 - Both are exported from the package root alongside the model dataclasses.
 
 ```python
@@ -74,7 +76,7 @@ async with OpencodeAsyncClient(base_url="http://127.0.0.1:8080") as oc:
 | `oc.config` | `get` `GET /config`, `update` `PATCH /config`, `providers` `GET /config/providers` |
 | `oc.session` | `list` `GET /session`, `create` `POST /session`, `status` `GET /session/status`, `get` `GET /session/{id}`, `update` `PATCH /session/{id}`, `delete` `DELETE /session/{id}`, `children` `GET /session/{id}/children`, `init` `POST /session/{id}/init`, `abort` `POST /session/{id}/abort`, `share` `POST /session/{id}/share`, `unshare` `DELETE /session/{id}/share`, `summarize` `POST /session/{id}/summarize`, `fork` `POST /session/{id}/fork`, `todo` `GET /session/{id}/todo`, `diff` `GET /session/{id}/diff` |
 | `oc.message` | `list` `GET /session/{id}/message`, `prompt` `POST /session/{id}/message`, `get` `GET /session/{id}/message/{mid}`, `command` `POST /session/{id}/command`, `shell` `POST /session/{id}/shell` |
-| `oc.file` | `list` `GET /file`, `read` `GET /file/content`, `status` `GET /file/status` |
+| `oc.files` | `list` `GET /file`, `read` `GET /file/content`, `status` `GET /file/status` |
 | `oc.find` | `text` `GET /find`, `files` `GET /find/file`, `symbols` `GET /find/symbol` |
 | `oc.project` | `list` `GET /project`, `current` `GET /project/current` |
 | `oc.vcs` | `get` `GET /vcs`, `status` `GET /vcs/status`, `diff` `GET /vcs/diff` |
