@@ -1,10 +1,9 @@
-"""
-   .aMMMb  .dMMMb  .aMMMb 
-  dMP"dMP dMP" VP dMP"VMP 
- dMP dMP  VMMMb  dMP      
-dMP.aMP dP .dMP dMP.aMP   
-VMMMP"  VMMMP"  VMMMP"    
-"""
+#    .aMMMb  .dMMMb  .aMMMb
+#   dMP"dMP dMP" VP dMP"VMP
+#  dMP dMP  VMMMb  dMP
+# dMP.aMP dP .dMP dMP.aMP
+# VMMMP"  VMMMP"  VMMMP"
+
 from importlib.metadata import PackageMetadata, metadata
 from pathlib import Path
 from typing import Final

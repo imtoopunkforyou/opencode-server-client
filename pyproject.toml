@@ -43,6 +43,7 @@ mypy = "^2.1.0"
 ruff = "^0.15.15"
 codespell = "^2.4.2"
 pymarkdownlnt = "==0.9.35"
+flake8-digit-separator = "^1.0.7"
 
 
 [tool.poetry.group.tests.dependencies]

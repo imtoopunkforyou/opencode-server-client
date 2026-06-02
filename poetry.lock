@@ -345,6 +345,21 @@ pycodestyle = ">=2.14.0,<2.15.0"
 pyflakes = ">=3.4.0,<3.5.0"
 
 [[package]]
+name = "flake8-digit-separator"
+version = "1.0.7"
+description = "Correct placement of separators"
+optional = false
+python-versions = "<4.0,>=3.10"
+groups = ["lint"]
+files = [
+    {file = "flake8_digit_separator-1.0.7-py3-none-any.whl", hash = "sha256:27a405c6b6d465429ec38e615a7c0fe6ac289eebd965d19402d2e3ecfd5690ca"},
+    {file = "flake8_digit_separator-1.0.7.tar.gz", hash = "sha256:f1a9194df5cb1fa50082c65c79f5c78a571892d52541af90f87cdd1286fe2fcc"},
+]
+
+[package.dependencies]
+flake8 = ">=7.1,<8.0"
+
+[[package]]
 name = "h11"
 version = "0.16.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -1270,4 +1285,4 @@ pygments = ">=2.19,<3.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "12b0bedd307b5185310c0577b4a195fba71dfc5aae25bb4666efd8e63e52d9e5"
+content-hash = "ad01f54da465c35aa7c17387132a7bd76ad31d49878c0435bfab5ae269a2b184"
