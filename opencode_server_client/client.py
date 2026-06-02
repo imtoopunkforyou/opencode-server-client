@@ -22,6 +22,7 @@ from opencode_server_client.resources import (
     McpResource,
     PathResource,
     ProjectResource,
+    ProviderResource,
     ServerResource,
     SkillResource,
     VcsResource,
@@ -35,6 +36,7 @@ from opencode_server_client.resources._async import (
     AsyncMcpResource,
     AsyncPathResource,
     AsyncProjectResource,
+    AsyncProviderResource,
     AsyncServerResource,
     AsyncSkillResource,
     AsyncVcsResource,
@@ -91,6 +93,7 @@ class OpencodeClient:
         self.lsp = LspResource(self._transport)
         self.mcp = McpResource(self._transport)
         self.project = ProjectResource(self._transport)
+        self.provider = ProviderResource(self._transport)
         self.vcs = VcsResource(self._transport)
 
     def close(self) -> None:
@@ -140,6 +143,7 @@ class OpencodeAsyncClient:
         self.lsp = AsyncLspResource(self._transport)
         self.mcp = AsyncMcpResource(self._transport)
         self.project = AsyncProjectResource(self._transport)
+        self.provider = AsyncProviderResource(self._transport)
         self.vcs = AsyncVcsResource(self._transport)
 
     async def aclose(self) -> None:

@@ -22,6 +22,9 @@ from opencode_server_client.resources.find import FindResource as FindResource
 from opencode_server_client.resources.project import (
     ProjectResource as ProjectResource,
 )
+from opencode_server_client.resources.provider import (
+    ProviderResource as ProviderResource,
+)
 from opencode_server_client.resources.server import (
     ServerResource as ServerResource,
 )
