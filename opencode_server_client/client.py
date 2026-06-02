@@ -17,6 +17,7 @@ from opencode_server_client.resources import (
     AgentResource,
     CommandResource,
     FileResource,
+    FindResource,
     LspResource,
     McpResource,
     PathResource,
@@ -29,6 +30,7 @@ from opencode_server_client.resources._async import (
     AsyncAgentResource,
     AsyncCommandResource,
     AsyncFileResource,
+    AsyncFindResource,
     AsyncLspResource,
     AsyncMcpResource,
     AsyncPathResource,
@@ -83,6 +85,7 @@ class OpencodeClient:
         self.agent = AgentResource(self._transport)
         self.command = CommandResource(self._transport)
         self.files = FileResource(self._transport)
+        self.find = FindResource(self._transport)
         self.skill = SkillResource(self._transport)
         self.path = PathResource(self._transport)
         self.lsp = LspResource(self._transport)
@@ -131,6 +134,7 @@ class OpencodeAsyncClient:
         self.agent = AsyncAgentResource(self._transport)
         self.command = AsyncCommandResource(self._transport)
         self.files = AsyncFileResource(self._transport)
+        self.find = AsyncFindResource(self._transport)
         self.skill = AsyncSkillResource(self._transport)
         self.path = AsyncPathResource(self._transport)
         self.lsp = AsyncLspResource(self._transport)

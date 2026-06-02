@@ -20,6 +20,9 @@ from opencode_server_client.resources._catalog_skill_lsp import (
 from opencode_server_client.resources.file import (
     AsyncFileResource as AsyncFileResource,
 )
+from opencode_server_client.resources.find import (
+    AsyncFindResource as AsyncFindResource,
+)
 from opencode_server_client.resources.project import (
     AsyncProjectResource as AsyncProjectResource,
 )
